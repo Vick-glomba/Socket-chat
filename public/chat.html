@@ -51,7 +51,7 @@
                                     <div class="open-panel"><i class="ti-angle-right"></i></div>
                                     <div class="chat-left-inner">
                                         <div class="form-material">
-                                            <input class="form-control p-20" type="text" placeholder="Buscar Contacto">
+                                            <input id="buscar" class="form-control p-20" type="text" placeholder="Buscar Contacto">
                                         </div>
                                         <ul class="chatonline style-none" id="divUsuarios">
                                         
@@ -62,9 +62,7 @@
                                 <!-- .chat-right-panel -->
                                 <div class="chat-right-aside">
                                     <div class="chat-main-header">
-                                        <div class="p-20 b-b">
-                                            <h3 class="box-title">Sala de chat <small>Video Juegos</small></h3>
-                                        </div>
+                                        <div id="nombreSala" class="p-20 b-b"> </div>
                                     </div>
 
                                     <div class="chat-rbox">
@@ -92,9 +90,22 @@
                                             
                                         </ul>
                                     </div>
+                                    
                                     <div class="card-body b-t">
 
                                       <form id="formEnviar">
+                                        <div class="card-body b-t">
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <input autocomplete="off" id="para" placeholder="Para:" class="form-control b-0">
+                                                </div>
+                                                    <div class="col-4 text-left">
+                                                        <button id="btnBorrar" type="reset" class="btn btn-danger btn-circle ">X</button>
+                                                    </div>
+                                            </div>                                           
+                                        </div>
+                                          <div class="card-body b-t">
+                                              
                                         <div class="row">
                                             <div class="col-8">
                                                 <input autocomplete="off" id="txtMensaje" placeholder="Escribe tu mensaje aquí" class="form-control b-0" autofocus>

@@ -15,9 +15,11 @@ io.on('connection', (client) => {
             msg: 'El nombre y sala son necesarios'
         })
        }
+       
+
 
        client.join(data.sala);
-
+       
        usuarios.agregarPersona(client.id, data.nombre, data.sala);
 
        client.broadcast.to(data.sala).emit('listaPersona', usuarios.getPersonasPorSala(data.sala));
@@ -26,6 +28,18 @@ io.on('connection', (client) => {
 
 
     })
+
+    client.on('busqueda', (data) =>{
+        let personasEnSala = usuarios.getPersonasPorSala(data.sala)
+        let personasFiltradas= personasEnSala.filter( persona => {
+            let contiene= persona.nombre.includes(data.filtro);
+          if(contiene){
+            return persona;
+          }  
+        })
+
+        client.emit('listaPersona', personasFiltradas )
+    } );
 
     client.on('crearMensaje', (data, callback) =>{
 
@@ -37,18 +51,23 @@ io.on('connection', (client) => {
         callback(mensaje);
 
     } )
+    
+    client.on('mensajePrivado', (data, callback) => {
+
+        let persona = usuarios.getPersona(client.id);
+        
+        client.broadcast.to(data.para).emit('mensajePrivado', crearMensaje(persona.nombre, data.mensaje))
+        let mensaje= crearMensaje(persona.nombre, data.mensaje);
+        
+        callback(mensaje)
+    })
+
+    
 
     client.on('disconnect', () => {
         let personaBorrada= usuarios.borrarPersona(client.id)
         client.broadcast.to(personaBorrada.sala).emit('crearMensaje', crearMensaje('Administrador',`${personaBorrada.nombre} salio.`))
         client.broadcast.to(personaBorrada.sala).emit('listaPersona', usuarios.getPersonasPorSala(personaBorrada.sala));
-    })
-
-    client.on('mensajePrivado', data => {
-
-        let persona = usuarios.getPersona(client.id);
-        
-        client.broadcast.to(data.para).emit('mensajePrivado', crearMensaje(persona.nombre, data.mensaje))
     })
     
 });
