@@ -20,7 +20,7 @@ io.on('connection', (client) => {
 
        client.join(data.sala);
        
-       usuarios.agregarPersona(client.id, data.nombre, data.sala);
+       usuarios.agregarPersona(client.id, data.nombre, data.sala, data.img);
 
        client.broadcast.to(data.sala).emit('listaPersona', usuarios.getPersonasPorSala(data.sala));
        client.broadcast.to(data.sala).emit('crearMensaje', crearMensaje('Administrador',`${data.nombre} se unio.`))

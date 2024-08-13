@@ -2,6 +2,8 @@
 <html lang="en">
 
 <head>
+    
+    <meta name="google-signin-client_id" content="1023916028923-mnn067lcjn3itrr0lo8oj1s07kddgrcj.apps.googleusercontent.com">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
@@ -49,19 +51,43 @@
                         <h3 class="box-title m-b-20">Ingresar al Chat</h3>
                         <div class="form-group ">
                             <div class="col-xs-12">
-                                <input class="form-control" type="text" required="" placeholder="Nombre de usuario" name="nombre"> </div>
+                                <input id="nombreInput" class="form-control" type="text" required="" placeholder="Nombre de usuario" name="nombre"> </div>
                         </div>
                         <div class="form-group">
                             <div class="col-xs-12">
-                                <input class="form-control" type="text" required="" placeholder="Sala de chat" name="sala"> </div>
+                                <input id="salaInput" class="form-control" type="text" required="" placeholder="Sala de chat" name="sala"> </div>
                                 
                             </div>
                         
                         <div class="form-group text-center">
                             <div class="col-xs-12 p-b-20">
-                                <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Ingresar al chat</button>
+                                <button id="ingresarChat" class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Ingresar al chat</button>
                             </div>
+
+                            <!-- Google boton -->
+                            
+                            <div id="g_id_onload"
+                                data-client_id="642823068191-t9q5p7cl3h4q9adj2e10qghkqfglqnpl.apps.googleusercontent.com"
+                                data-callback="handleCredentialResponse"
+                                data-auto_prompt="false">
+                            </div>
+                            <div class="g_id_signin"
+                                data-type="standard"
+                                data-size="large"
+                                data-theme="outline"
+                                data-text="sign_in_with"
+                                data-shape="rectangular"
+                                data-logo_alignment="center">
+                            </div>
+                            
                         </div>
+                        <div class="row mt-5">
+                        </div>
+                    
+                            
+                                </form>
+                    
+                            </div>
                     </form>
 
                 </div>
@@ -88,6 +114,40 @@
             $('[data-toggle="tooltip"]').tooltip()
         });
     </script>
+
+<script>
+    function handleCredentialResponse(response) {
+   
+       function decodeJwtResponse (token) {
+           var base64Url = token.split('.')[1];
+           var base64 = base64Url.replace('-', '+').replace('_', '/');
+           return JSON.parse(window.atob(base64));
+        };
+           const responsePayload = decodeJwtResponse(response.credential);
+
+        
+        // console.log("ID: " + responsePayload.sub);
+        // console.log('Full Name: ' + responsePayload.name);
+        // console.log('Given Name: ' + responsePayload.given_name);
+        // console.log('Family Name: ' + responsePayload.family_name);
+        // console.log("Image URL: " + responsePayload.picture);
+        // console.log("Email: " + responsePayload.email);
+        
+        let nombre = document.querySelector("#nombreInput")
+        nombre.value = responsePayload.name;
+        
+        let sala = document.querySelector("#salaInput")
+        if (sala.value.trim() !== ""){
+            window.location = `chat.html?nombre=${responsePayload.name}&sala=${sala.value}&img=${responsePayload.picture}`
+        }
+        
+
+     }
+     
+    
+  </script>
+
+    <script src="https://accounts.google.com/gsi/client" async></script>
 
 </body>
 

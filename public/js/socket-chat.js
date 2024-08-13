@@ -8,10 +8,10 @@ if (!params.has('nombre') || !params.has('sala')) {
 }
 
 
-
 var usuario = {
     nombre: params.get('nombre'),
-    sala: params.get('sala')
+    sala: params.get('sala'),
+    img: params.get('img')
 };
 
 

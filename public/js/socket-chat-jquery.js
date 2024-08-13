@@ -7,6 +7,7 @@ var sala = params.get("sala")
 
 //referencias de jQuery
 
+
 var divUsuarios = $('#divUsuarios');
 var formEnviar = $('#formEnviar');
 var txtMensaje = $('#txtMensaje');
@@ -22,7 +23,7 @@ var target;
 
 
 function renderizarUsuarios(personas) {
-    //console.log(personas);
+  
     var html = '';
     html += '<li>';
     html += ' <a href="javascript:void(0)" class="active"> Chat de <span> '+ sala +'</span></a>';
@@ -31,7 +32,7 @@ function renderizarUsuarios(personas) {
     for (let i = 0; i < personas.length; i++) {
         
         html += '<li>';
-        html += ' <a data-id="' + personas[i].id + '" data-nombre="' + personas[i].nombre + '" href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>'+ personas[i].nombre +'<small class="text-success">online</small></span></a>';
+        html += ' <a data-id="' + personas[i].id + '" data-nombre="' + personas[i].nombre + '" href="javascript:void(0)"><img src="'+personas[i].img+'" alt="user-img" class="img-circle"> <span>'+ personas[i].nombre +'<small class="text-success">online</small></span></a>';
         html += '</li>';
         
     }
@@ -117,7 +118,6 @@ function renderizarUsuarios(personas) {
 }
 
 //listeners
-
 
 
 //filtrar users segun lo tipeado en busqueda
